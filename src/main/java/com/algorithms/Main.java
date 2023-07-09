@@ -7,7 +7,7 @@ public class Main {
         int[] rawArr = {7, 15, -1, 20, 35, 4, 55};
         //bubbleSort(rawArr);
         //selectionSort(rawArr);
-        insertionSort(rawArr);
+        mergeSort(rawArr);
         System.out.println(Arrays.toString(rawArr));
     }
 
@@ -57,4 +57,53 @@ public class Main {
             }
         }
     }
+
+    public static void mergeSort(int[] rawArr) {
+        int n = rawArr.length;
+        if (n < 2) {
+            return;
+        }
+        int mid = n / 2;
+        int[] l = new int[mid];
+        int[] r = new int[n - mid];
+
+        for (int i = 0; i < mid; i++) {
+            l[i] = rawArr[i];
+        }
+        for (int i = mid; i < n; i++) {
+            r[i - mid] = rawArr[i];
+        }
+        mergeSort(l);
+        mergeSort(r);
+
+        merge(rawArr, l, r);
+    }
+
+    public static void merge(
+            int[] rawArr, int[] l, int[] r) {
+
+        int i = 0, j = 0, k = 0;
+        while (i < l.length && j < r.length) {
+            if (l[i] <= r[j]) {
+                rawArr[k] = l[i];
+                i++;
+            }
+            else {
+                rawArr[k] = r[j];
+                j++;
+            }
+            k++;
+        }
+        while (i < l.length) {
+            rawArr[k] = l[i];
+            k++;
+            i++;
+        }
+        while (j < r.length) {
+            rawArr[k] = r[j];
+            k++;
+            j++;
+        }
+    }
+
 }
